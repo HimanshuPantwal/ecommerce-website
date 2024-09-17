@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 import { useEffect, useState } from 'react';
 import MyContext from './myContext';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
@@ -6,15 +6,13 @@ import { fireDB } from '../firebase/FirebaseConfig';
 import toast from 'react-hot-toast';
 
 function MyState({ children }) {
-    // Loading State 
+    
     const [loading, setLoading] = useState(false);
 
-    // User State
+    
     const [getAllProduct, setGetAllProduct] = useState([]);
 
-    /**========================================================================
-     *                          GET All Product Function
-     *========================================================================**/
+
 
     const getAllProductFunction = async () => {
         setLoading(true);
@@ -37,15 +35,8 @@ function MyState({ children }) {
             setLoading(false);
         }
     }
-
-
-    // Order State 
+    
     const [getAllOrder, setGetAllOrder] = useState([]);
-
-
-    /**========================================================================
-     *                           GET All Order Function
-     *========================================================================**/
 
     const getAllOrderFunction = async () => {
         setLoading(true);
@@ -70,7 +61,7 @@ function MyState({ children }) {
     }
 
 
-    // Delete oder Function
+    
     const orderDelete = async (id) => {
         setLoading(true)
         try {
@@ -85,13 +76,9 @@ function MyState({ children }) {
     }
 
 
-    // user State 
+    
     const [getAllUser, setGetAllUser] = useState([]);
 
-
-    /**========================================================================
-     *                           GET All User Function
-     *========================================================================**/
 
     const getAllUserFunction = async () => {
         setLoading(true);

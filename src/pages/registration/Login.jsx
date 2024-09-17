@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import myContext from "../../context/myContext";
@@ -12,21 +12,15 @@ const Login = () => {
     const context = useContext(myContext);
     const { loading, setLoading } = context;
 
-    // navigate 
     const navigate = useNavigate();
 
-    // User Signup State 
     const [userLogin, setUserLogin] = useState({
         email: "",
         password: ""
     });
 
-    /**========================================================================
-     *                          User Login Function 
-    *========================================================================**/
-
     const userLoginFunction = async () => {
-        // validation 
+       
         if (userLogin.email === "" || userLogin.password === "") {
             toast.error("All Fields are required")
         }
@@ -34,7 +28,7 @@ const Login = () => {
         setLoading(true);
         try {
             const users = await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
-            // console.log(users.user)
+           
 
             try {
                 const q = query(
@@ -72,17 +66,15 @@ const Login = () => {
     return (
         <div className='flex justify-center items-center h-screen'>
             {loading && <Loader />}
-            {/* Login Form  */}
+            
             <div className="login_Form bg-pink-50 px-8 py-6 border border-pink-100 rounded-xl shadow-md">
 
-                {/* Top Heading  */}
                 <div className="mb-5">
                     <h2 className='text-center text-2xl font-bold text-pink-500 '>
                         Login
                     </h2>
                 </div>
 
-                {/* Input One  */}
                 <div className="mb-3">
                     <input
                         type="email"
@@ -99,7 +91,6 @@ const Login = () => {
                     />
                 </div>
 
-                {/* Input Two  */}
                 <div className="mb-5">
                     <input
                         type="password"
@@ -115,7 +106,6 @@ const Login = () => {
                     />
                 </div>
 
-                {/* Signup Button  */}
                 <div className="mb-5">
                     <button
                         type='button'

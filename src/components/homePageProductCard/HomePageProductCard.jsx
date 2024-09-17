@@ -19,14 +19,14 @@ const HomePageProductCard = () => {
 
     const dispatch = useDispatch();
 
-    // add to cart function
+   
     const addCart = (item) => {
         dispatch(addToCart(item));
         toast.success("Added to cart")
     }
 
 
-    // delete from cart function
+    
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
         toast.success("Delete cart")
@@ -38,20 +38,20 @@ const HomePageProductCard = () => {
 
     return (
         <div className="mt-10">
-            {/* Heading  */}
+            
             <div className="">
                 <h1 className=" text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
             </div>
 
-            {/* main 1 */}
+            
             <section className="text-gray-600 body-font">
-                {/* main 2 */}
+                
                 <div className="container px-5 py-5 mx-auto">
 
                     <div className="flex justify-center">
                         {loading && <Loader />}
                     </div>
-                    {/* main 3  */}
+                    
                     <div className="flex flex-wrap -m-4">
                         {getAllProduct.slice(0, 8).map((item, index) => {
                             const { id, title, price, productImageUrl } = item;

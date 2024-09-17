@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unescaped-entities */
+
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import myContext from "../../context/myContext";
@@ -12,10 +12,9 @@ const Signup = () => {
     const context = useContext(myContext);
     const {loading, setLoading } = context;
 
-    // navigate 
+   
     const navigate = useNavigate();
 
-    // User Signup State 
     const [userSignup, setUserSignup] = useState({
         name: "",
         email: "",
@@ -23,12 +22,8 @@ const Signup = () => {
         role: "user"
     });
 
-    /**========================================================================
-     *                          User Signup Function 
-    *========================================================================**/
-
     const userSignupFunction = async () => {
-        // validation 
+        
         if (userSignup.name === "" || userSignup.email === "" || userSignup.password === "") {
             toast.error("All Fields are required")
         }
@@ -37,7 +32,6 @@ const Signup = () => {
         try {
             const users = await createUserWithEmailAndPassword(auth, userSignup.email, userSignup.password);
 
-            // create user object
             const user = {
                 name: userSignup.name,
                 email: users.user.email,
@@ -53,11 +47,7 @@ const Signup = () => {
                     }
                 )
             }
-
-            // create user Refrence
             const userRefrence = collection(fireDB, "user")
-
-            // Add User Detail
             addDoc(userRefrence, user);
 
             setUserSignup({
@@ -79,17 +69,13 @@ const Signup = () => {
     return (
         <div className='flex justify-center items-center h-screen'>
             {loading && <Loader/>}
-            {/* Login Form  */}
+            
             <div className="login_Form bg-pink-50 px-8 py-6 border border-pink-100 rounded-xl shadow-md">
-
-                {/* Top Heading  */}
                 <div className="mb-5">
                     <h2 className='text-center text-2xl font-bold text-pink-500 '>
                         Signup
                     </h2>
                 </div>
-
-                {/* Input One  */}
                 <div className="mb-3">
                     <input
                         type="text"
@@ -104,8 +90,6 @@ const Signup = () => {
                         className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
                     />
                 </div>
-
-                {/* Input Two  */}
                 <div className="mb-3">
                     <input
                         type="email"
@@ -121,7 +105,6 @@ const Signup = () => {
                     />
                 </div>
 
-                {/* Input Three  */}
                 <div className="mb-5">
                     <input
                         type="password"
@@ -136,8 +119,6 @@ const Signup = () => {
                         className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
                     />
                 </div>
-
-                {/* Signup Button  */}
                 <div className="mb-5">
                     <button
                         type='button'
@@ -151,7 +132,6 @@ const Signup = () => {
                 <div>
                     <h2 className='text-black'>Have an account <Link className=' text-pink-500 font-bold' to={'/login'}>Login</Link></h2>
                 </div>
-
             </div>
         </div>
     );

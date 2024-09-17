@@ -37,12 +37,12 @@ const UpdateProductPage = () => {
     const context = useContext(myContext);
     const { loading, setLoading, getAllProductFunction } = context;
 
-    // navigate 
+    
     const navigate = useNavigate();
     const { id } = useParams()
     console.log(id)
 
-    // product state
+    
     const [product, setProduct] = useState({
         title: "",
         price: "",
@@ -60,7 +60,7 @@ const UpdateProductPage = () => {
         )
     });
 
-    // Get Single Product Function
+    
     const getSingleProductFunction = async () => {
         try {
             const productTemp = await getDoc(doc(fireDB, "products", id))
@@ -115,7 +115,7 @@ const UpdateProductPage = () => {
                         </h2>
                     </div>
 
-                    {/* Input One  */}
+                   
                     <div className="mb-3">
                         <input
                             type="text"
@@ -132,7 +132,7 @@ const UpdateProductPage = () => {
                         />
                     </div>
 
-                    {/* Input Two  */}
+                    
                     <div className="mb-3">
                         <input
                             type="number"
@@ -149,7 +149,7 @@ const UpdateProductPage = () => {
                         />
                     </div>
 
-                    {/* Input Three  */}
+                    
                     <div className="mb-3">
                         <input
                             type="text"
@@ -166,7 +166,7 @@ const UpdateProductPage = () => {
                         />
                     </div>
 
-                    {/* Input Four  */}
+                    
                     <div className="mb-3">
                         <select
                             value={product.category}
@@ -187,7 +187,7 @@ const UpdateProductPage = () => {
                         </select>
                     </div>
 
-                    {/* Input Five  */}
+                    
                     <div className="mb-3">
                         <textarea
                             value={product.description}
@@ -201,7 +201,7 @@ const UpdateProductPage = () => {
                         </textarea>
                     </div>
 
-                    {/* Update Product Button  */}
+                    
                     <div className="mb-3">
                         <button
                             onClick={updateProduct}

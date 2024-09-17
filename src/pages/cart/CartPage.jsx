@@ -37,10 +37,10 @@ const CartPage = () => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])
 
-    // user
+    
     const user = JSON.parse(localStorage.getItem('users'))
 
-    // Buy Now Function
+    
     const [addressInfo, setAddressInfo] = useState({
         name: "",
         address: "",
@@ -58,12 +58,11 @@ const CartPage = () => {
     });
 
     const buyNowFunction = () => {
-        // validation 
+
         if (addressInfo.name === "" || addressInfo.address === "" || addressInfo.pincode === "" || addressInfo.mobileNumber === "") {
             return toast.error("All Fields are required")
         }
-
-        // Order Info 
+       
         const orderInfo = {
             cartItems,
             addressInfo,

@@ -20,12 +20,12 @@ const ProductInfo = () => {
 
     // console.log(product)
 
-    // getProductData
+    
     const getProductData = async () => {
         setLoading(true)
         try {
             const productTemp = await getDoc(doc(fireDB, "products", id))
-            // console.log({...productTemp.data(), id : productTemp.id})
+            
             setProduct({...productTemp.data(), id : productTemp.id})
             setLoading(false)
         } catch (error) {
