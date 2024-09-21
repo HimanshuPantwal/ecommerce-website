@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import myContext from "../../context/myContext";
 const Footer = () => {
+    const context=useContext(myContext);
+    const {mode}=context;
     return (
         <div>
 
-            <footer className="text-gray-600 body-font bg-pink-600">
+            <footer className="text-gray-600 body-font"  style={mode === 'dark' ? {backgroundColor:'#282c34',color:'white'}:{backgroundColor:'#d81b60',color:'black'}}>
 
                 <div className="container px-5 py-5 mx-auto flex items-center sm:flex-row flex-col">
 

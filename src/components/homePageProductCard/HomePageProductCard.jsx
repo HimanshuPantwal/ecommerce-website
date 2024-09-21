@@ -11,10 +11,10 @@ const HomePageProductCard = () => {
     const navigate = useNavigate();
 
     const context = useContext(myContext);
-    const { loading, getAllProduct } = context;
+    const { loading, getAllProduct,mode } = context;
 
     const cartItems = useSelector((state) => state.cart);
-
+    
     // console.log(cartItems);
 
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const HomePageProductCard = () => {
     }, [cartItems]);
 
     return (
-        <div className="mt-10">
+        <div className="mt-10" style={mode==='light'?{backgroundColor:'white'}:{backgroundColor:'rgb(62 64 66)'}} >
             
             <div className="">
                 <h1 className=" text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
@@ -65,7 +65,7 @@ const HomePageProductCard = () => {
                                             alt="img"
                                         />
                                         <div className="p-6">
-                                            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                                            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1" >
                                                 E-commerce
                                             </h2>
                                             <h1 className="title-font text-lg font-medium text-gray-900 mb-3">

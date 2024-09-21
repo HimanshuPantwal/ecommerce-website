@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router";
-
-
+import { useEffect } from "react";
+import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
+import { useRef } from "react";
+import myContext from "../../context/myContext";
+import { useContext } from "react";
+import MyState from "../../context/myState";
 const category = [
     {
         image: 'https://cdn-icons-png.flaticon.com/256/4359/4359963.png',
@@ -37,40 +41,86 @@ const category = [
 ]
 
 const Category = () => {
+    const scrollContainerRef = useRef(null);
+    const context=useContext(myContext);
+    const {mode}=context;
     
-    const navigate = useNavigate();
-    return (
-        <div>
-            <div className="flex flex-col mt-5">
-                
-                <div className="flex overflow-x-scroll lg:justify-center  hide-scroll-bar">
-                    
-                    <div className="flex ">
-                       
-                        {category.map((item, index) => {
-                            return (
-                                <div key={index} className="px-3 lg:px-10">
-                                   
-                                    <div onClick={() => navigate(`/category/${item.name}`)} className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full  bg-pink-500 transition-all hover:bg-pink-400 cursor-pointer mb-1 " >
-                                        <div className="flex justify-center mb-12">
-                                            
-                                            <img src={item.image} alt="img" />
-                                        </div>
-                                    </div>
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollLeft -= 200; 
+        }
+    };
 
-                                    
-                                    <h1 className=' text-sm lg:text-lg text-center font-medium title-font first-letter:uppercase '>{item.name}</h1>
+    
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollLeft += 200;
+        }
+    };
+    const bgColor={
+        background: '#085078',
+        background: '-webkit-linear-gradient(to right, #85D8CE, #085078)',
+        background: 'linear-gradient(to right, #85D8CE, #085078)'
+    }
+    useEffect(() => {
+        const scrollContainer = scrollContainerRef.current;
+
+        const handleWheel = (event) => {
+            if (scrollContainer) {
+                event.preventDefault();
+                scrollContainer.scrollLeft += event.deltaY; 
+            }
+        };
+
+        scrollContainer.addEventListener("wheel", handleWheel);
+
+        return () => {
+            scrollContainer.removeEventListener("wheel", handleWheel);
+        };
+    }, []);
+
+    return (
+        <div className="relative w-[100%] flex justify-center items-center" style={mode==='light'?{backgroundColor:'white'}:{backgroundColor:'rgb(40, 44, 52)'}}>
+            <button
+                onClick={scrollLeft}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 m-1"
+            >
+                <CiCircleChevLeft size={30} style={mode==='light'?{color:'black'}:{color:'white'}} />
+            </button>
+            <div
+                ref={scrollContainerRef}
+                style={{
+                    scrollBehavior: "smooth",
+                    overflow:"hidden"
+                }}
+                className='flex overflow-x-auto whitespace-nowrap w-[100%] h-[200px] scroll-p-left-[10px] border-[#ccc] border-1 border-solid hide-scroll-bar'
+            >
+                <div className="flex items-center hide-scroll-bar">
+                    {category.map((item, index) => {
+                        return (
+                            <div key={index} className="px-3 lg:px-10 hover:scale-105 transition-all duration-300">
+
+                                <div onClick={() => navigate(`/category/${item.name}`)} className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full transition-all cursor-pointer mb-1 hover:rotate-[360deg] duration-1000">
+                                    <div className="flex justify-center mb-12" style={mode==='dark'?{...bgColor,borderRadius:'100%'}:{background:'pink',borderRadius:'100%'}} >
+
+                                        <img src={item.image} alt="img" />
+                                    </div>
                                 </div>
-                            )
-                        })}
-                    </div>
+                                <h1 className=' text-sm lg:text-lg text-center font-medium title-font first-letter:uppercase ' style={mode==='light'?{color:'black'}:{color:'white'}}>{item.name}</h1>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
 
-            
-            <style dangerouslySetInnerHTML={{ __html: "\n.hide-scroll-bar {\n  -ms-overflow-style: none;\n  scrollbar-width: none;\n}\n.hide-scroll-bar::-webkit-scrollbar {\n  display: none;\n}\n" }} />
+            <button
+                onClick={scrollRight}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 m-1"
+            >
+                <CiCircleChevRight size={30} style={mode==='light'?{color:'black'}:{color:'white'}}/>
+            </button>
         </div>
     );
-}
+};
 
 export default Category;

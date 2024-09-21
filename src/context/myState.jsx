@@ -9,10 +9,8 @@ function MyState({ children }) {
     
     const [loading, setLoading] = useState(false);
 
-    
+    const [mode,setMode]=useState('light');
     const [getAllProduct, setGetAllProduct] = useState([]);
-
-
 
     const getAllProductFunction = async () => {
         setLoading(true);
@@ -101,7 +99,16 @@ function MyState({ children }) {
             setLoading(false);
         }
     }
-
+    const toggleMode=()=>{
+        if(mode==='light') {
+            setMode('dark');
+            document.querySelector('body').style.backgroundColor='rgb(62 64 66)';
+        }
+        else {
+            setMode('light');
+            document.querySelector('body').style.backgroundColor='white';
+    };
+    }
     useEffect(() => {
         getAllProductFunction();
         getAllOrderFunction();
@@ -115,7 +122,9 @@ function MyState({ children }) {
             getAllProductFunction,
             getAllOrder,
             orderDelete,
-            getAllUser
+            getAllUser,
+            mode,
+            toggleMode,
         }}>
             {children}
         </MyContext.Provider>
