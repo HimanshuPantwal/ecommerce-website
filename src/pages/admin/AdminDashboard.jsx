@@ -3,16 +3,28 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ProductDetail from '../../components/admin/ProductDetail';
 import OrderDetail from '../../components/admin/OrderDetail';
 import UserDetail from '../../components/admin/UserDetail';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import myContext from '../../context/myContext';
+import Layout  from '../../components/layout/Layout';
 
 const AdminDashboard = () => {
-    const user = JSON.parse(localStorage.getItem('users'));
     const context = useContext(myContext);
-    const {getAllProduct, getAllOrder, getAllUser} = context;
+    const { getAllProduct, getAllOrder, getAllUser } = context;
+    const [user,setUser]=useState(null);
+    useEffect(()=>{
+        console.log(JSON.parse(localStorage.getItem('users')));
+        const storedUser=JSON.parse(localStorage.getItem('users'));
+        if(storedUser){
+            setUser(storedUser);
+        }
+    },[])
+    if (!user) {
+        return <div>Loading user data...</div>;
+    }
+
     return (
+        <Layout>
         <div>
-           
             <div className="top mb-5 px-5 mt-5">
                 <div className=" bg-pink-50 py-5 border border-pink-100 rounded-lg">
                     <h1 className=" text-center text-2xl font-bold text-pink-500">Admin Dashboard</h1>
@@ -20,35 +32,24 @@ const AdminDashboard = () => {
             </div>
 
             <div className="px-5">
-               
                 <div className="mid mb-5">
-                    
                     <div className=" bg-pink-50 py-5 rounded-xl border border-pink-100">
-                        
                         <div className="flex justify-center">
                             <img src="https://cdn-icons-png.flaticon.com/128/2202/2202112.png" alt="" />
                         </div>
-                        
-                           <div className="">
-                            
+                        <div>
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Name : </span>
                                 {user?.name}
                             </h1>
-
-                            
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Email : </span>
                                 {user?.email}
                             </h1>
-
-                           
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Date : </span>
                                 {user?.date}
                             </h1>
-
-                            
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Role : </span>
                                 {user?.role}
@@ -56,8 +57,6 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
-
-                
                 <div className="">
                     <Tabs>
                         <TabList className="flex flex-wrap -m-4 text-center justify-center">
@@ -165,6 +164,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
         </div>
+        </Layout>
     );
 }
 

@@ -1,4 +1,3 @@
-
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import myContext from "../../context/myContext";
@@ -20,38 +19,42 @@ const Login = () => {
     });
 
     const userLoginFunction = async () => {
-       
         if (userLogin.email === "" || userLogin.password === "") {
-            toast.error("All Fields are required")
+            toast.error("All Fields are required");
+            return;
         }
-
+    
         setLoading(true);
         try {
             const users = await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
-           
-
+    
             try {
                 const q = query(
                     collection(fireDB, "user"),
                     where('uid', '==', users?.user?.uid)
                 );
-                const data = onSnapshot(q, (QuerySnapshot) => {
+                const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
                     let user;
                     QuerySnapshot.forEach((doc) => user = doc.data());
-                    localStorage.setItem("users", JSON.stringify(user) )
+    
+                    // Set user data in localStorage
+                    localStorage.setItem("users", JSON.stringify(user));
+    
                     setUserLogin({
                         email: "",
                         password: ""
-                    })
+                    });
                     toast.success("Login Successfully");
                     setLoading(false);
-                    if(user.role === "user") {
+    
+                    // Navigate only after data is set
+                    if (user.role === "user") {
                         navigate('/user-dashboard');
-                    }else{
+                    } else {
                         navigate('/admin-dashboard');
                     }
                 });
-                return () => data;
+                return () => unsubscribe();
             } catch (error) {
                 console.log(error);
                 setLoading(false);
@@ -61,8 +64,8 @@ const Login = () => {
             setLoading(false);
             toast.error("Login Failed");
         }
-
-    }
+    };
+    
     return (
         <div className='flex justify-center items-center h-screen'>
             {loading && <Loader />}
@@ -126,4 +129,3 @@ const Login = () => {
 }
 
 export default Login;
-
