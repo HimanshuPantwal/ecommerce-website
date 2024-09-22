@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState,useEffect } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
 import myContext from '../../context/myContext'
 import { BsFillCloudSunFill } from 'react-icons/bs'
 import { FiSun } from 'react-icons/fi'
@@ -12,25 +12,29 @@ function Navbar() {
   const { mode, toggleMode } = context;
 
   const [open, setOpen] = useState(false)
-  const [user,setUser]=useState(null);
-  const [isLoggedIn,setISLoggedIn]=useState(false);
-  // Safely parse user from localStorage
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(()=>{
-    const storedUser=JSON.parse(localStorage.getItem('user'));
+      console.log(JSON.parse(localStorage.getItem('users')));
+      const storedUser=JSON.parse(localStorage.getItem('users'));
+      if(storedUser){
+          setUser(storedUser);
+          setIsLoggedIn(true);
+      }
+  },[])
+  
 
-    if(storedUser) {
-      setUser(storedUser);
-      setISLoggedIn(true);
-      console.log(isLoggedIn);
-    }
-  },[]);
+  const cartItems = useSelector((state) => state.cart || []);
+  console.log(isLoggedIn);
+  console.log(user?.user); 
 
-  const cartItems = useSelector((state) => state.cart)
 
-  // Improved logout function to clear specific user data only
   const logout = () => {
     localStorage.removeItem('user');
-    window.location.href = '/login'; // Use navigate for SPA behavior instead
+    setUser(null);
+    setIsLoggedIn(false);
+    window.location.href = '/login'; 
   }
 
   return (
@@ -59,8 +63,8 @@ function Navbar() {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl" 
-                            style={{ backgroundColor: mode === 'dark' ? 'rgb(40, 44, 52)' : '', color: mode === 'dark' ? 'white' : '', }}>
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl"
+                style={{ backgroundColor: mode === 'dark' ? 'rgb(40, 44, 52)' : '', color: mode === 'dark' ? 'white' : '', }}>
                 <div className="flex px-4 pb-2 pt-28">
                   <button
                     type="button"
@@ -73,15 +77,15 @@ function Navbar() {
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-900" 
-                        style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-900"
+                    style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
                   </Link>
 
                   {isLoggedIn && (
                     <div className="flow-root">
-                      <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }} 
-                            className="-m-2 block p-2 font-medium text-gray-900">
+                      <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }}
+                        className="-m-2 block p-2 font-medium text-gray-900">
                         Order
                       </Link>
                     </div>
@@ -89,8 +93,8 @@ function Navbar() {
 
                   {user?.user?.email === "himanshupantwal5@gmail.com" && (
                     <div className="flow-root">
-                      <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" 
-                            style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900"
+                        style={{ color: mode === 'dark' ? 'white' : '', }}>
                         Admin
                       </Link>
                     </div>
@@ -98,34 +102,41 @@ function Navbar() {
 
                   {isLoggedIn ? (
                     <div className="flow-root">
-                      <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" 
-                         style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === 'dark' ? 'white' : '', }}>
                         Logout
                       </a>
                     </div>
                   ) : (
                     <div className="flow-root">
-                      <Link to={'/signup'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" 
-                            style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      <Link to={'/signup'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        style={{ color: mode === 'dark' ? 'white' : '', }}>
                         Signup
                       </Link>
                     </div>
                   )}
 
                   <div className="flow-root">
-                    <Link to={'/'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
+                    {user?.user?.email==="himanshupantwal5@gmail.com"?<Link to={'/admin-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img className="inline-block w-10 h-10 rounded-full"
-                           src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
-                           alt="profile icon" />
+                        src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                        alt="profile icon" />
                     </Link>
+                    :
+                    <Link to={'/user-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
+                      <img className="inline-block w-10 h-10 rounded-full"
+                        src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                        alt="profile icon" />
+                    </Link>
+                    }
                   </div>
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
                   <a href="#" className="-m-2 flex items-center p-2">
                     <img src="img/indiaflag.png" alt="" className="block h-auto w-5 flex-shrink-0" />
-                    <span className="ml-3 block text-base font-medium text-gray-900" 
-                          style={{ color: mode === 'dark' ? 'white' : '', }}>INDIA</span>
+                    <span className="ml-3 block text-base font-medium text-gray-900"
+                      style={{ color: mode === 'dark' ? 'white' : '', }}>INDIA</span>
                     <span className="sr-only">, change currency</span>
                   </a>
                 </div>
@@ -136,13 +147,13 @@ function Navbar() {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8" 
-           style={mode === 'dark' ? { backgroundColor: 'black', color: 'white' } : { backgroundColor: '#d81b60', color: 'black' }}>
+        <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+          style={mode === 'dark' ? { backgroundColor: 'black', color: 'white' } : { backgroundColor: '#d81b60', color: 'black' }}>
           Get free delivery on orders over ₹300
         </p>
 
-        <nav aria-label="Top" className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl" 
-             style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
+        <nav aria-label="Top" className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl"
+          style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
           <div>
             <div className="flex h-16 items-center">
               <button
@@ -169,8 +180,7 @@ function Navbar() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-700" 
-                        style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-700" style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
                   </Link>
 

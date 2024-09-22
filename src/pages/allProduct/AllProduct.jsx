@@ -16,7 +16,7 @@ const AllProduct = () => {
 
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-
+    console.log(getAllProduct);
     const addCart = (item) => {
         // console.log(item)
         dispatch(addToCart(item));
@@ -28,11 +28,17 @@ const AllProduct = () => {
         toast.success("Delete cart")
     }
 
-    // console.log(cartItems)
+    console.log(cartItems)
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])
+    
+    useEffect(()=>{
+        fetch("https://fakestoreapi.com/products")
+        .then((res) => res.json())
+        .then((json) => console.log(json));
+    },[])
     return (
         <Layout>
             <div className="py-8">

@@ -37,7 +37,7 @@ const Login = () => {
                     let user;
                     QuerySnapshot.forEach((doc) => user = doc.data());
     
-                    // Set user data in localStorage
+                  
                     localStorage.setItem("users", JSON.stringify(user));
     
                     setUserLogin({
@@ -47,7 +47,6 @@ const Login = () => {
                     toast.success("Login Successfully");
                     setLoading(false);
     
-                    // Navigate only after data is set
                     if (user.role === "user") {
                         navigate('/user-dashboard');
                     } else {
