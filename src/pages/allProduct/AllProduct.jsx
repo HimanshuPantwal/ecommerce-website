@@ -33,11 +33,17 @@ const AllProduct = () => {
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])
-    
+    let p={};
     useEffect(()=>{
-        fetch("https://fakestoreapi.com/products")
+        fetch("https://fakestoreapi.com/products?limit=500")
         .then((res) => res.json())
-        .then((json) => console.log(json));
+        .then((json) => {console.log(json)
+          json.map((obj)=>{
+                  console.log(obj.title);
+                  
+          })
+        } 
+        );
     },[])
     return (
         <Layout>

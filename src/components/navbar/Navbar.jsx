@@ -14,20 +14,24 @@ function Navbar() {
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email,setEmail]=useState("");
 
   useEffect(()=>{
-      console.log(JSON.parse(localStorage.getItem('users')));
+      // console.log(JSON.parse(localStorage.getItem('users')));
       const storedUser=JSON.parse(localStorage.getItem('users'));
       if(storedUser){
           setUser(storedUser);
           setIsLoggedIn(true);
+          console.log(storedUser);
+          setEmail(storedUser.email);
+          console.log(email);
       }
   },[])
   
 
   const cartItems = useSelector((state) => state.cart || []);
-  console.log(isLoggedIn);
-  console.log(user?.user); 
+  // console.log(isLoggedIn);
+  // console.log(user?.user); 
 
 
   const logout = () => {
@@ -91,9 +95,9 @@ function Navbar() {
                     </div>
                   )}
 
-                  {user?.user?.email === "himanshupantwal5@gmail.com" && (
+                  { email === "himanshupantwal5@gmail.com" && (
                     <div className="flow-root">
-                      <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900"
+                      <Link to={'/admin-dashboard'} className="-m-2 block p-2 font-medium text-gray-900"
                         style={{ color: mode === 'dark' ? 'white' : '', }}>
                         Admin
                       </Link>
@@ -194,36 +198,19 @@ function Navbar() {
                           style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Signup
                     </Link>)}
-
-                  {user?.user?.email === 'himanshupantwal5@gmail.com' ? 
-                   <Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Admin
-                  </Link> : ""}
-                  
                 
                  {user ?  <a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Logout
                   </a> : ""}
                 </div>
-
                 <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      src="https://ecommerce-sk.vercel.app/img/indiaflag.png"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-sm font-medium" style={{ color: mode === 'dark' ? 'white' : '', }}>INDIA</span>
-                  </a>
-                </div>
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
+                  <Link to={email==='himanshupantwal5@gmail.com'?"/admin-dashboard":"/user-dashboard"} className="flex items-center text-gray-700 ">
                     <img
                       className="inline-block w-10 h-10 rounded-full"
                       src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
 
                       alt="image" />
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="flex lg:ml-6">

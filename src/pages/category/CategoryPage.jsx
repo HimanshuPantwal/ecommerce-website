@@ -32,7 +32,7 @@ const CategoryPage = () => {
     }
 
     // console.log(cartItems)
-
+    // console.log(filterProduct);
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])

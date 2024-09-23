@@ -1,53 +1,37 @@
 import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, useState, useCallback,useRef } from "react";
 import myContext from "../../context/myContext";
 import toast from "react-hot-toast";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import { useNavigate } from "react-router";
 import Loader from "../../components/loader/Loader";
 
-const categoryList = [
-    {
-        name: 'fashion'
-    },
-    {
-        name: 'shirt'
-    },
-    {
-        name: 'jacket'
-    },
-    {
-        name: 'mobile'
-    },
-    {
-        name: 'laptop'
-    },
-    {
-        name: 'shoes'
-    },
-    {
-        name: 'home'
-    },
-    {
-        name: 'books'
-    }
-]
+const categoryList = {
+    fashion: ['clothes', 'apparel', 'mens', 'womens'],
+    shirt: ['shirt', 't-shirt', 'top'],
+    jacket: ['jacket', 'coat', 'blazer'],
+    mobile: ['phone', 'mobile', 'smartphone'],
+    laptop: ['laptop', 'notebook', 'macbook'],
+    shoes: ['shoes', 'sneakers', 'boots'],
+    home: ['furniture', 'appliance', 'decor'],
+    books: ['book', 'novel', 'magazine']
+};
 
 const AddProductPage = () => {
     const context = useContext(myContext);
     const { loading, setLoading } = context;
-
- 
+    const [fetchingFromApi, setFetchingFromApi] = useState(false);
+    
     const navigate = useNavigate();
 
-   
+
     const [product, setProduct] = useState({
         title: "",
         price: "",
         productImageUrl: "",
         category: "",
         description: "",
-        quantity : 1,
+        quantity: 1,
         time: Timestamp.now(),
         date: new Date().toLocaleString(
             "en-US",
@@ -59,13 +43,19 @@ const AddProductPage = () => {
         )
     });
 
+    const randomNum = () => {
+        return Math.floor(Math.random() * 100) + 1;
+    }
+    const countRef=useRef(randomNum());
 
-   
     const addProductFunction = async () => {
-        if (product.title == "" || product.price == "" || product.productImageUrl == "" || product.category == "" || product.description == "") {
+        if(fetchingFromApi&& product.category==="") {
+            return toast.error("Choose Category");
+        }
+        if (product.title == "" || product.price == "" || product.productImageUrl == "" || product.category == "" || product.description == "" && !fetchingFromApi) {
             return toast.error("all fields are required")
         }
-
+        
         setLoading(true);
         try {
             const productRef = collection(fireDB, 'products');
@@ -80,11 +70,102 @@ const AddProductPage = () => {
         }
 
     }
+    const handleCategory = (ctg) => {
+        for (let category in categoryList) {
+            console.log(categoryList[category]);
+
+            if (categoryList[category].some(keyword => ctg.toLowerCase().includes(keyword.toLowerCase()))) {
+                return category;
+            }
+        }
+        return '';
+    }
+    // useEffect(()=>{
+    //     fetch("https://fakestoreapi.com/products?limit=500")
+    //     .then((res) => res.json())
+    //     .then((json) =>{ 
+    //         console.log(json);
+
+    //         json.map((obj)=>{
+    //             setProduct({
+    //                 title: obj.title,
+    //                 price: obj.price,
+    //                 productImageUrl: obj.image, 
+    //                 category: obj.category,
+    //                 description: obj.description,
+    //                 quantity:randomNum(), 
+    //                 time:Timestamp.now(),
+    //                 date:new Date().toLocaleString("en-US", {
+    //                   month: "short",
+    //                   day: "2-digit",
+    //                   year: "numeric",
+    //                 }),    
+    //         })
+    //     });
+    //     addProductFunction();
+    // }
+    // ,[])
+
+    const fetchApi = useCallback(() => {
+        console.log(countRef.current);
+        setProduct({
+            title: "",
+            price: "",
+            productImageUrl: "",
+            category: "",
+            description: "",
+            quantity: 1,
+            time: Timestamp.now(),
+            date: new Date().toLocaleString(
+                "en-US",
+                {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                }
+            )
+        });
+        fetch(`https://fakestoreapi.com/products/${countRef.current}`)
+            .then((res) => res.json())
+            .then(json => {
+                console.log(json);
+                if (handleCategory(json.category) !== "" || handleCategory(json.title) !== "") {
+                    setLoading(true);
+                    setProduct({
+                        title: json.title,
+                        price: json.price,
+                        productImageUrl: json.image,
+                        category: handleCategory(json.category) !== "" ? handleCategory(json.category) : handleCategory(json.title),
+                        description: json.description,
+                        quantity: randomNum(),
+                        time: Timestamp.now(),
+                        date: new Date().toLocaleString("en-US", {
+                            month: 'short',
+                            day: '2-digit',
+                            year: 'numeric'
+                        }),
+                    });
+                    setFetchingFromApi(true);
+                    addProductFunction();
+                    setFetchingFromApi(false);
+                    setLoading(false);
+                    countRef.current=randomNum();
+                } else {
+                    toast.error("Fetch Again!!");
+                    setLoading(false);
+                    countRef.current=randomNum();
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching product:", error);
+                setLoading(false);
+            });
+    }, [countRef.current, handleCategory, randomNum, addProductFunction]);
     return (
         <div>
             <div className='flex justify-center items-center h-screen'>
                 {loading && <Loader />}
-         
+
                 <div className="login_Form bg-pink-50 px-8 py-6 border border-pink-100 rounded-xl shadow-md">
 
                     {/* Top Heading  */}
@@ -157,12 +238,16 @@ const AddProductPage = () => {
                             }}
                             className="w-full px-1 py-2 text-pink-300 bg-pink-50 border border-pink-200 rounded-md outline-none  ">
                             <option disabled>Select Product Category</option>
-                            {categoryList.map((value, index) => {
-                                const { name } = value
+                            {Object.keys(categoryList).map((category, index) => {
                                 return (
-                                    <option className=" first-letter:uppercase" key={index} value={name}>{name}</option>
-                                )
-                            })}
+                                    category===product.category?<option className="first-letter:uppercase" key={index} value={category} selected>
+                                        {category}
+                                    </option>:<option className="first-letter:uppercase" key={index} value={category}>
+                                        {category}
+                                    </option>
+                                );
+                            })
+                            }
                         </select>
                     </div>
 
@@ -191,6 +276,9 @@ const AddProductPage = () => {
                         </button>
                     </div>
                 </div>
+            </div>
+            <div className="w-full text-center mb-5">
+                <button onClick={fetchApi} className="w-32 h-20 rounded-xl text-center bg-blue-500">Fetch From Api</button>
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ import MyContext from './myContext';
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { fireDB } from '../firebase/FirebaseConfig';
 import toast from 'react-hot-toast';
+import { Timestamp} from "firebase/firestore";
 
 function MyState({ children }) {
     
@@ -11,7 +12,23 @@ function MyState({ children }) {
 
     const [mode,setMode]=useState('light');
     const [getAllProduct, setGetAllProduct] = useState([]);
-
+    const [product, setProduct] = useState({
+        title: "",
+        price: "",
+        productImageUrl: "",
+        category: "",
+        description: "",
+        quantity : 1,
+        time: Timestamp.now(),
+        date: new Date().toLocaleString(
+            "en-US",
+            {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+            }
+        )
+    });
     const getAllProductFunction = async () => {
         setLoading(true);
         try {
@@ -125,6 +142,8 @@ function MyState({ children }) {
             getAllUser,
             mode,
             toggleMode,
+            product,
+            setProduct
         }}>
             {children}
         </MyContext.Provider>

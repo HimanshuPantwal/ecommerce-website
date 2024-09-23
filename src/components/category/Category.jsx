@@ -99,7 +99,7 @@ const Category = () => {
                     {category.map((item, index) => {
                         return (
                             <div key={index} className="px-3 lg:px-10 hover:scale-105 transition-all duration-300">
-
+                                 {console.log(item.name)}
                                 <div onClick={() => navigate(`/category/${item.name}`)} className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full transition-all cursor-pointer mb-1 hover:rotate-[360deg] duration-1000">
                                     <div className="flex justify-center mb-12" style={mode==='dark'?{...bgColor,borderRadius:'100%'}:{background:'pink',borderRadius:'100%'}} >
 
