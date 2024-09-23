@@ -41,6 +41,7 @@ const category = [
 ]
 
 const Category = () => {
+    const navigate=useNavigate();
     const scrollContainerRef = useRef(null);
     const context=useContext(myContext);
     const {mode}=context;
