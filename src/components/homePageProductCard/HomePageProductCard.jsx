@@ -15,7 +15,7 @@ const HomePageProductCard = () => {
 
     const cartItems = useSelector((state) => state.cart);
     
-    // console.log(cartItems);
+   
 
     const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ const HomePageProductCard = () => {
         <div className="mt-10" style={mode==='light'?{backgroundColor:'white'}:{backgroundColor:'rgb(62 64 66)'}} >
             
             <div className="">
-                <h1 className=" text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
+                <h1 className=" text-center mb-5 text-2xl font-semibold" style={mode==='dark'?{color:"white"}:{color:"black"}}>Bestselling Products</h1>
             </div>
 
             
@@ -57,7 +57,7 @@ const HomePageProductCard = () => {
                             const { id, title, price, productImageUrl } = item;
                             return (
                                 <div key={index} className="p-4 w-full md:w-1/4">
-                                    <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                    <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer" style={mode==='dark'?{backgroundColor:"#282c34"}:{}}>
                                         <img
                                             onClick={() => navigate(`/productinfo/${id}`)}
                                             className="lg:h-80  h-96 w-full"
@@ -65,13 +65,13 @@ const HomePageProductCard = () => {
                                             alt="img"
                                         />
                                         <div className="p-6">
-                                            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1" >
+                                            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1" style={mode==='dark'?{color:"white"}:{}} >
                                                 E-commerce
                                             </h2>
-                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3" style={mode==='dark'?{color:"white"}:{}}>
                                                 {title.substring(0, 25)}
                                             </h1>
-                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3" style={mode==='dark'?{color:"white"}:{}}>
                                                 ₹{price}
                                             </h1>
 

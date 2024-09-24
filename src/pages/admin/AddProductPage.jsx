@@ -43,10 +43,8 @@ const AddProductPage = () => {
         )
     });
 
-    const randomNum = () => {
-        return Math.floor(Math.random() * 100) + 1;
-    }
-    const countRef=useRef(randomNum());
+    const randomNum = (end) => Math.floor(Math.random() * end) + 1;
+    const countRef=useRef(randomNum(3));
 
     const addProductFunction = async () => {
         if(fetchingFromApi&& product.category==="") {
@@ -125,19 +123,21 @@ const AddProductPage = () => {
                 }
             )
         });
-        fetch(`https://fakestoreapi.com/products/${countRef.current}`)
+        fetch(`https://fakestoreapi.in/api/products?page=${countRef.current}`)
             .then((res) => res.json())
             .then(json => {
                 console.log(json);
-                if (handleCategory(json.category) !== "" || handleCategory(json.title) !== "") {
+                console.log(json['products']);
+                const pdt=json['products'][randomNum(49)];
+                if (handleCategory(pdt.category) !== "" || handleCategory(pdt.title) !== "") {
                     setLoading(true);
                     setProduct({
-                        title: json.title,
-                        price: json.price,
-                        productImageUrl: json.image,
-                        category: handleCategory(json.category) !== "" ? handleCategory(json.category) : handleCategory(json.title),
-                        description: json.description,
-                        quantity: randomNum(),
+                        title: pdt.title,
+                        price: pdt.price,
+                        productImageUrl: pdt.image,
+                        category: handleCategory(pdt.category) !== "" ? handleCategory(pdt.category) : handleCategory(pdt.title),
+                        description: pdt.description,
+                        quantity: randomNum(100),
                         time: Timestamp.now(),
                         date: new Date().toLocaleString("en-US", {
                             month: 'short',
@@ -149,11 +149,11 @@ const AddProductPage = () => {
                     addProductFunction();
                     setFetchingFromApi(false);
                     setLoading(false);
-                    countRef.current=randomNum();
+                    countRef.current=randomNum(3);
                 } else {
                     toast.error("Fetch Again!!");
                     setLoading(false);
-                    countRef.current=randomNum();
+                    countRef.current=randomNum(3);
                 }
             })
             .catch((error) => {
