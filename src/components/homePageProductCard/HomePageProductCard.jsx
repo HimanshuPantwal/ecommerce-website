@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import myContext from "../../context/myContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect,useState } from "react";
 import Loader from "../loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 const HomePageProductCard = () => {
     const navigate = useNavigate();
-
+    const [user, setUser] = useState(null);
     const context = useContext(myContext);
     const { loading, getAllProduct,mode } = context;
 
@@ -35,7 +35,18 @@ const HomePageProductCard = () => {
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems]);
-
+    
+    useEffect(()=>{
+     
+        const storedUser=JSON.parse(localStorage.getItem('users'));
+        if(storedUser){
+            setUser(storedUser);
+            setIsLoggedIn(true);
+            console.log(storedUser);
+            setEmail(storedUser.email);
+            console.log(email);
+        }
+    },[])
     return (
         <div className="mt-10" style={mode==='light'?{backgroundColor:'white'}:{backgroundColor:'rgb(62 64 66)'}} >
             
@@ -76,7 +87,7 @@ const HomePageProductCard = () => {
                                             </h1>
 
                                             <div className="flex justify-center ">
-                                                {cartItems.some((p) => p.id === item.id)
+                                                {cartItems.some((p) => p.id === item.id) && user
 
                                                     ?
                                                     <button

@@ -17,7 +17,7 @@ function Navbar() {
   const [email,setEmail]=useState("");
 
   useEffect(()=>{
-      // console.log(JSON.parse(localStorage.getItem('users')));
+     
       const storedUser=JSON.parse(localStorage.getItem('users'));
       if(storedUser){
           setUser(storedUser);
@@ -29,13 +29,11 @@ function Navbar() {
   },[])
   
 
-  const cartItems = useSelector((state) => state.cart || []);
-  // console.log(isLoggedIn);
-  // console.log(user?.user); 
+  const cartItems = useSelector((state) => state.cart || []); 
 
 
   const logout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('users');
     setUser(null);
     setIsLoggedIn(false);
     window.location.href = '/login'; 
@@ -188,7 +186,7 @@ function Navbar() {
                     All Products
                   </Link>
 
-                  {isLoggedIn ? (
+                  {isLoggedIn && user ? (
                     <Link to={'/order'} className="text-sm font-medium text-gray-700" 
                           style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Order
@@ -199,7 +197,7 @@ function Navbar() {
                       Signup
                     </Link>)}
                 
-                 {user ?  <a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                 {user && isLoggedIn ?  <a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Logout
                   </a> : ""}
                 </div>
