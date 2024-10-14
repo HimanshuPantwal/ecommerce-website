@@ -9,9 +9,6 @@ const UserDashboard = () => {
 
     const context = useContext(myContext);
     const { loading, getAllOrder } = context
-    // console.log(getAllOrder)
-
-    // console.log(user)
     return (
         <Layout>
             <div className=" container mx-auto px-4 py-5 lg:py-8">

@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const CategoryPage = () => {
     const { categoryname } = useParams();
     const context = useContext(myContext);
-    const { getAllProduct, loading } = context;
+    const { getAllProduct, loading,isLoggedIn } = context;
 
     const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const CategoryPage = () => {
     const dispatch = useDispatch();
 
     const addCart = (item) => {
-        // console.log(item)
+        
         dispatch(addToCart(item));
         toast.success("Add to cart")
     }
@@ -31,8 +31,7 @@ const CategoryPage = () => {
         toast.success("Delete cart")
     }
 
-    // console.log(cartItems)
-    // console.log(filterProduct);
+    
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])
@@ -88,7 +87,7 @@ const CategoryPage = () => {
 
                                                                         ?
                                                                         <button
-                                                                            onClick={() => deleteCart(item)}
+                                                                            onClick={isLoggedIn?() => deleteCart(item):()=>{toast.error("Please Login or Sign up")}}
                                                                             className=" bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
                                                                             Delete To Cart
                                                                         </button>
@@ -96,7 +95,7 @@ const CategoryPage = () => {
                                                                         :
 
                                                                         <button
-                                                                            onClick={() => addCart(item)}
+                                                                            onClick={isLoggedIn?() => addCart(item):()=>{toast.error("Please Login or Sign up")}}
                                                                             className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
                                                                             Add To Cart
                                                                         </button>

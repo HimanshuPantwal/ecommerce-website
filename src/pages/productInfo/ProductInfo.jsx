@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 
 const ProductInfo = () => {
     const context = useContext(myContext);
-    const { loading, setLoading } = context;
+    const { loading, setLoading,isLoggedIn } = context;
 
     const [product, setProduct] = useState('')
     // console.log(product)
@@ -167,14 +167,14 @@ const ProductInfo = () => {
                                             {cartItems.some((p) => p.id === product.id)
                                                 ?
                                                 <button
-                                                    onClick={() => deleteCart(product)}
+                                                    onClick={isLoggedIn?() => deleteCart(product):()=>{toast.error("Please Login or Sign up")}}
                                                     className="w-full px-4 py-3 text-center text-white bg-red-500 border border--600  hover:bg-red-600 hover:text-gray-100  rounded-xl"
                                                 >
                                                     Delete to cart
                                                 </button>
                                                 :
                                                 <button
-                                                    onClick={() => addCart(product)}
+                                                    onClick={isLoggedIn?() => addCart(product):()=>{toast.error("Please Login or Sign up")}}
                                                     className="w-full px-4 py-3 text-center text-pink-600 bg-pink-100 border border-pink-600  hover:bg-pink-600 hover:text-gray-100  rounded-xl"
                                                 >
                                                     Add to cart

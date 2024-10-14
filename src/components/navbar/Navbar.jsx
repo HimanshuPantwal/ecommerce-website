@@ -9,34 +9,33 @@ import { useSelector } from 'react-redux';
 
 function Navbar() {
   const context = useContext(myContext);
-  const { mode, toggleMode } = context;
+  const { mode, toggleMode,isLoggedIn,setIsLoggedIn } = context;
 
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email,setEmail]=useState("");
+  const [email, setEmail] = useState("");
 
-  useEffect(()=>{
-     
-      const storedUser=JSON.parse(localStorage.getItem('users'));
-      if(storedUser){
-          setUser(storedUser);
-          setIsLoggedIn(true);
-          console.log(storedUser);
-          setEmail(storedUser.email);
-          console.log(email);
-      }
-  },[])
-  
+  useEffect(() => {
 
-  const cartItems = useSelector((state) => state.cart || []); 
+    const storedUser = JSON.parse(localStorage.getItem('users'));
+    if (storedUser) {
+      setUser(storedUser);
+      setIsLoggedIn(true);
+      console.log(storedUser);
+      setEmail(storedUser.email);
+      console.log(email);
+    }
+  }, [])
+
+
+  const cartItems = useSelector((state) => state.cart || []);
 
 
   const logout = () => {
     localStorage.removeItem('users');
     setUser(null);
     setIsLoggedIn(false);
-    window.location.href = '/'; 
+    window.location.href = '/';
   }
 
   return (
@@ -84,7 +83,7 @@ function Navbar() {
                     All Products
                   </Link>
 
-                  {isLoggedIn && (
+                  {isLoggedIn && user?.role!=="admin" && (
                     <div className="flow-root">
                       <Link to={'/order'} style={{ color: mode === 'dark' ? 'white' : '', }}
                         className="-m-2 block p-2 font-medium text-gray-900">
@@ -93,7 +92,7 @@ function Navbar() {
                     </div>
                   )}
 
-                  { email === "himanshupantwal5@gmail.com" && (
+                  {email === "himanshupantwal5@gmail.com" && (
                     <div className="flow-root">
                       <Link to={'/admin-dashboard'} className="-m-2 block p-2 font-medium text-gray-900"
                         style={{ color: mode === 'dark' ? 'white' : '', }}>
@@ -119,17 +118,17 @@ function Navbar() {
                   )}
 
                   <div className="flow-root">
-                    {user?.user?.email==="himanshupantwal5@gmail.com"?<Link to={'/admin-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
+                    {user?.user?.email === "himanshupantwal5@gmail.com" ? <Link to={'/admin-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img className="inline-block w-10 h-10 rounded-full"
                         src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
                         alt="profile icon" />
                     </Link>
-                    :
-                    <Link to={'/user-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
-                      <img className="inline-block w-10 h-10 rounded-full"
-                        src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
-                        alt="profile icon" />
-                    </Link>
+                      :
+                      <Link to={'/user-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
+                        <img className="inline-block w-10 h-10 rounded-full"
+                          src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                          alt="profile icon" />
+                      </Link>
                     }
                   </div>
                 </div>
@@ -187,22 +186,25 @@ function Navbar() {
                   </Link>
 
                   {isLoggedIn && user ? (
-                    <Link to={'/order'} className="text-sm font-medium text-gray-700" 
-                          style={{ color: mode === 'dark' ? 'white' : '', }}>
-                      Order
-                    </Link>
+                    (email !== "himanshupantwal5@gmail.com" && user?.role !== "admin") ? (
+                      <Link to={'/order'} className="text-sm font-medium text-gray-700"
+                        style={{ color: mode === 'dark' ? 'white' : '', }}>
+                        Order
+                      </Link>
+                    ) : null // If the user is admin, show nothing
                   ) : (
-                    <Link to={'/signup'} className="text-sm font-medium text-gray-700" 
-                          style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    <Link to={'/signup'} className="text-sm font-medium text-gray-700"
+                      style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Signup
-                    </Link>)}
-                
-                 {user && isLoggedIn ?  <a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    </Link>
+                  )}
+
+                  {user && isLoggedIn ? <a onClick={logout} className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Logout
                   </a> : ""}
                 </div>
                 <div className="hidden lg:ml-8 lg:flex">
-                  <Link to={email==='himanshupantwal5@gmail.com'?"/admin-dashboard":"/user-dashboard"} className="flex items-center text-gray-700 ">
+                  <Link to={email === 'himanshupantwal5@gmail.com' ? "/admin-dashboard" : "/user-dashboard"} className="flex items-center text-gray-700 ">
                     <img
                       className="inline-block w-10 h-10 rounded-full"
                       src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
@@ -222,14 +224,15 @@ function Navbar() {
                 </div>
 
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link to={'/cart'} className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                  {user?.role!=="admin"?<Link to={'/cart'} className="group -m-2 flex items-center p-2" style={{ color: mode === 'dark' ? 'white' : '', }}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
 
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-" style={{ color: mode === 'dark' ? 'white' : '', }}>{cartItems.length}</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-" style={{ color: mode === 'dark' ? 'white' : '', }}>{user ? cartItems.length : 0}</span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </Link>
+                  </Link>:null
+                  }
                 </div>
               </div>
             </div>

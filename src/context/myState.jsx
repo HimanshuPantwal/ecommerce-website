@@ -50,7 +50,7 @@ function MyState({ children }) {
             setLoading(false);
         }
     }
-    
+    const [isLoggedIn,setIsLoggedIn]=useState(false);
     const [getAllOrder, setGetAllOrder] = useState([]);
 
     const getAllOrderFunction = async () => {
@@ -143,7 +143,9 @@ function MyState({ children }) {
             mode,
             toggleMode,
             product,
-            setProduct
+            setProduct,
+            isLoggedIn,
+            setIsLoggedIn
         }}>
             {children}
         </MyContext.Provider>
