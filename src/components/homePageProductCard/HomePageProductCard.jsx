@@ -11,10 +11,9 @@ const HomePageProductCard = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const context = useContext(myContext);
+    const [isLoggedIn,setIsLoggedIn]=useState(false);
     const { loading, getAllProduct,mode } = context;
-
     const cartItems = useSelector((state) => state.cart);
-    
    
 
     const dispatch = useDispatch();
@@ -43,8 +42,6 @@ const HomePageProductCard = () => {
             setUser(storedUser);
             setIsLoggedIn(true);
             console.log(storedUser);
-            setEmail(storedUser.email);
-            console.log(email);
         }
     },[])
     return (
@@ -91,7 +88,7 @@ const HomePageProductCard = () => {
 
                                                     ?
                                                     <button
-                                                        onClick={() => deleteCart(item)}
+                                                        onClick={isLoggedIn?() => deleteCart(item):()=>{}}
                                                         className=" bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
 
                                                         Delete From Cart
@@ -100,7 +97,7 @@ const HomePageProductCard = () => {
                                                     :
 
                                                     <button
-                                                        onClick={() => addCart(item)}
+                                                        onClick={isLoggedIn?() => addCart(item):()=>{}}
                                                         className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
                                                         Add To cart
                                                     </button>
