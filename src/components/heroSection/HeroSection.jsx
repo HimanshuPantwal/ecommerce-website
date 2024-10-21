@@ -33,28 +33,28 @@ const HeroSlider = () => {
     
     const sliderItems = [
         {
-            category: "mobiles",
-            image: "https://media.istockphoto.com/id/1322157897/photo/close-up-of-a-businessman-hand-holding-a-smartphone-white-screen-is-blank-the-background-is.webp?s=1024x1024&w=is&k=20&c=hjLRm5BlNx86H-3dsn_KbuT2iRQL_FAgpdlFApNqEgM=",
+            category: "mobile",
+            image: "https://img.freepik.com/free-vector/silver-smartphone_23-2147694815.jpg?t=st=1729498127~exp=1729501727~hmac=6ac3958b20b17505e4612b085f0537ed899c15b0a4bb56e3b0f0396753bcd7b6&w=740",
             offer: "Up to 30% OFF on Mobiles",
         },
         {
             category: "laptop",
-            image: "https://img.freepik.com/free-photo/person-using-laptop-with-coffee-wooden-table_9975-24434.jpg?t=st=1728900873~exp=1728904473~hmac=6cd93a5482132deb054c5d3fd0f0e506abb5b5f86faacc1c41a04c26095c9f07&w=1060",
+            image: "https://img.freepik.com/free-photo/female-hand-typing-keyboard-laptop_1150-15742.jpg?t=st=1729498087~exp=1729501687~hmac=19f3b13c345927a67d9727b53c4c6484fcf6c8861f7d26ccaa526fee58420f3d&w=996",
             offer: "Flat 40% OFF on Laptops",
         },
         {
-            category: "electronics",
-            image: "https://images.unsplash.com/photo-1717295248230-93ea71f48f92?q=80&w=2128&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            offer: "20% OFF on Electronics",
+            category: "jacket",
+            image: "https://img.freepik.com/free-photo/young-man-with-beard-putting-hood-his-stylish-red-grey-anorack-isolated-white_346278-948.jpg?w=996&t=st=1729498004~exp=1729498604~hmac=c518e3b52a626c9060a3f4b280c88586322d9c9920a8795a276d92b8aa93eb45",
+            offer: "20% OFF on Jackets",
         },
         {
-            category: "home-appliances",
-            image: "https://media.istockphoto.com/id/1317490973/photo/modern-modular-kitchen-interior-range-cooker-and-chimney-hood.webp?s=1024x1024&w=is&k=20&c=kRS17UBXzyT4PebpL20G-7IJLZo5H9BuWHzil07i4wQ=",
+            category: "home",
+            image: "https://img.freepik.com/free-vector/household-appliances-realistic-composition_1284-65307.jpg?t=st=1729498051~exp=1729501651~hmac=ddcd1d876b150cf57dd2bd6592ecb558e7f6a4054247015e136cf8eea2446d8c&w=1060",
             offer: "Up to 10% OFF on Home Appliances",
         },
     ];
 
-    // React Slick settings
+    
     const settings = {
         dots: true,             // Show dots below the slider
         infinite: true,         // Infinite loop sliding

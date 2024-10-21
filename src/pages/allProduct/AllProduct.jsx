@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import Loader from "../../components/loader/Loader";
-import "aos/dist/aos.css"; // Importing AOS animation library
-import AOS from "aos"; // For animation on scroll
+import "aos/dist/aos.css"; 
+import AOS from "aos"; 
 
 const AllProduct = () => {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AllProduct = () => {
     }, [cartItems]);
 
     useEffect(() => {
-        // Initialize AOS animation
+        
         AOS.init({ duration: 800 });
     }, []);
 
@@ -42,10 +42,9 @@ const AllProduct = () => {
                 style={mode === "dark" ? { backgroundColor: "#1F1F1F" } : {}}
             >
                 <div>
-                    <h1 className="text-center mb-5 text-2xl font-semibold"
-                        style={mode === "dark" ? { color: "white" } : { color: "black" }}>
-                        All Products
-                    </h1>
+                    <h1 className="text-2xl text-center md:text-3xl font-bold text-pink-500 dark:text-pink-400">
+                    All Products
+        </h1>
                 </div>
 
                 <section className="text-gray-600 body-font">
@@ -90,14 +89,14 @@ const AllProduct = () => {
                                                     {cartItems.some((p) => p.id === item.id) ? (
                                                         <button
                                                             onClick={isLoggedIn ? () => deleteCart(item) : () => {}}
-                                                            className="bg-red-700 hover:bg-red-600 w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
+                                                            className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                                                         >
                                                             Delete From Cart
                                                         </button>
                                                     ) : (
                                                         <button
                                                             onClick={isLoggedIn ? () => addCart(item) : () => {}}
-                                                            className="bg-pink-500 hover:bg-pink-600 w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
+                                                            className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                                                         >
                                                             Add To Cart
                                                         </button>

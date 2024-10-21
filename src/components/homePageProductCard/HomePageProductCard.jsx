@@ -5,8 +5,8 @@ import Loader from "../loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
-import "aos/dist/aos.css";  // Importing AOS animation library
-import AOS from "aos";      // For animation on scroll
+import "aos/dist/aos.css"; 
+import AOS from "aos";      
 
 const HomePageProductCard = () => {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const HomePageProductCard = () => {
       setUser(storedUser);
       setIsLoggedIn(true);
     }
-    // Initialize AOS animation
+    
     AOS.init({ duration: 800 });
   }, []);
 
@@ -98,14 +98,14 @@ const HomePageProductCard = () => {
                         {cartItems.some((p) => p.id === item.id) && user ? (
                           <button
                             onClick={isLoggedIn ? () => deleteCart(item) : () => {}}
-                            className="bg-red-700 hover:bg-red-600 w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
+                            className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                           >
                             Delete From Cart
                           </button>
                         ) : (
                           <button
                             onClick={isLoggedIn ? () => addCart(item) : () => {}}
-                            className="bg-pink-500 hover:bg-pink-600 w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
+                            className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                           >
                             Add To Cart
                           </button>

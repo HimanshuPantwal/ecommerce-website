@@ -77,8 +77,8 @@ function Navbar() {
                   </button>
                 </div>
 
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-900"
+                <div className="space-y-6 border-t border-gray-200 px-4 py-6 ">
+                  <Link to={'/allproducts'} className="text-sm font-medium text-gray-900 "
                     style={{ color: mode === 'dark' ? 'white' : '', }}>
                     All Products
                   </Link>
@@ -118,29 +118,14 @@ function Navbar() {
                   )}
 
                   <div className="flow-root">
-                    {user?.user?.email === "himanshupantwal5@gmail.com" ? <Link to={'/admin-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
+                    <Link to={email === 'himanshupantwal5@gmail.com' ? "/admin-dashboard" : "/user-dashboard"}  className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img className="inline-block w-10 h-10 rounded-full"
                         src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
                         alt="profile icon" />
                     </Link>
-                      :
-                      <Link to={'/user-dashboard'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
-                        <img className="inline-block w-10 h-10 rounded-full"
-                          src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
-                          alt="profile icon" />
-                      </Link>
-                    }
                   </div>
                 </div>
 
-                <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
-                    <img src="img/indiaflag.png" alt="" className="block h-auto w-5 flex-shrink-0" />
-                    <span className="ml-3 block text-base font-medium text-gray-900"
-                      style={{ color: mode === 'dark' ? 'white' : '', }}>INDIA</span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -148,11 +133,7 @@ function Navbar() {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-pink-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
-          style={mode === 'dark' ? { backgroundColor: 'black', color: 'white' } : { backgroundColor: '#d81b60', color: 'black' }}>
-          Get free delivery on orders over ₹300
-        </p>
-
+       
         <nav aria-label="Top" className="bg-gray-100 px-4 sm:px-6 lg:px-8 shadow-xl"
           style={{ backgroundColor: mode === 'dark' ? '#282c34' : '', color: mode === 'dark' ? 'white' : '', }}>
           <div>
@@ -168,13 +149,14 @@ function Navbar() {
                 </svg>
               </button>
 
-              {/* Logo */}
+              
               <div className="ml-4 flex lg:ml-0">
                 <Link to={'/'} className='flex'>
                   <div className="flex">
-                    <h1 className='text-2xl font-bold px-2 py-1 rounded' style={{ color: mode === 'dark' ? 'white' : '', }}>
+                    {/* <h1 className='text-2xl font-bold px-2 py-1 rounded' style={{ color: mode === 'dark' ? 'white' : '', }}>
                       E-commerce
-                    </h1>
+                    </h1> */}
+                    <img src='https://img.freepik.com/free-vector/seasonal-sale-discounts-presents-purchase-visiting-boutiques-luxury-shopping-price-reduction-promotional-coupons-special-holiday-offers-vector-isolated-concept-metaphor-illustration_335657-2766.jpg?t=st=1729499744~exp=1729503344~hmac=a2d11797ce282da965c5e6c0ea904c610ff9cb1076fb543268f5d395eec23a2e&w=740' className='size-[3.5rem] rounded-full my-2 '></img>
                   </div>
                 </Link>
               </div>
@@ -191,7 +173,7 @@ function Navbar() {
                         style={{ color: mode === 'dark' ? 'white' : '', }}>
                         Order
                       </Link>
-                    ) : null // If the user is admin, show nothing
+                    ) : null 
                   ) : (
                     <Link to={'/signup'} className="text-sm font-medium text-gray-700"
                       style={{ color: mode === 'dark' ? 'white' : '', }}>

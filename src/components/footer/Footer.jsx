@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <div>
 
-            <footer className="text-gray-600 body-font"  style={mode === 'dark' ? {backgroundColor:'#282c34',color:'white'}:{backgroundColor:'#d81b60',color:'black'}}>
+            <footer className="text-gray-600 body-font"  style={mode === 'dark' ? {backgroundColor:'#282c34',color:'white'}:{backgroundColor:'#1e88e5',color:'black'}}>
 
                 <div className="container px-5 py-5 mx-auto flex items-center sm:flex-row flex-col">
 
