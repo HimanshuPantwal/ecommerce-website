@@ -76,8 +76,6 @@ const ProductInfo = () => {
                                         </h2>
                                         <div className="flex flex-wrap items-center mb-6">
                                             <ul className="flex mb-4 mr-2 lg:mb-0">
-                                                {/* Add any custom star ratings logic here */}
-                                                {/* Your SVG stars */}
                                             </ul>
                                         </div>
                                         <p className="inline-block text-2xl font-semibold">

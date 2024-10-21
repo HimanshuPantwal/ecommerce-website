@@ -7,7 +7,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 const PrevArrow = ({ className, style, onClick }) => {
     return (
         <div
-            className={`${className} bg-pink-500 hover:bg-pink-600 p-2 rounded-full shadow-lg size-[2rem] text-center z-10`}
+            className={`${className} bg-[#1c83dc] hover:bg-pink-600 p-2 pl-[0.3rem] rounded-full shadow-lg size-[2rem] text-center z-10`}
             style={{ ...style, display: "block", left: "-20px" }} 
             onClick={onClick}
         >
@@ -19,7 +19,7 @@ const PrevArrow = ({ className, style, onClick }) => {
 const NextArrow = ({ className, style, onClick }) => {
     return (
         <div
-            className={`${className} bg-pink-500 hover:bg-pink-600 rounded-full p-2 shadow-lg size-[2rem] text-center `}
+            className={`${className} bg-[#1c83dc] hover:bg-pink-600 rounded-full  p-2 pr-[0.3rem] shadow-lg size-[2rem] text-center `}
             style={{ ...style, display: "block", right: "-20px" }} 
             onClick={onClick}
         >
@@ -56,16 +56,16 @@ const HeroSlider = () => {
 
     
     const settings = {
-        dots: true,             // Show dots below the slider
-        infinite: true,         // Infinite loop sliding
-        speed: 500,             // Slide transition speed
-        slidesToShow: 1,        // Show one slide at a time
-        slidesToScroll: 1,      // Scroll one slide at a time
-        autoplay: true,         // Auto slide
-        autoplaySpeed: 3000,    // Slide every 3 seconds
-        arrows: true,           // Enable custom arrows
-        prevArrow: <PrevArrow />, // Custom previous arrow
-        nextArrow: <NextArrow />, // Custom next arrow
+        dots: true,             
+        infinite: true,         
+        speed: 500,             
+        slidesToShow: 1,        
+        slidesToScroll: 1,      
+        autoplay: true,         
+        autoplaySpeed: 3000,    
+        arrows: true,           
+        prevArrow: <PrevArrow />, 
+        nextArrow: <NextArrow />, 
     };
 
     return (

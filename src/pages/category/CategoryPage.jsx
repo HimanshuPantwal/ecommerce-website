@@ -62,7 +62,7 @@ const CategoryPage = () => {
                                             {filterProduct.map((item, index) => {
                                                 const { id, title, price, productImageUrl } = item
                                                 return (
-                                                    <div key={index} className="p-4 w-full md:w-1/4">
+                                                    <div key={index} className="p-4 w-full sm:w-1/2 md:w-1/3">
                                                         <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
                                                             <img
                                                                 onClick={() => navigate(`/productinfo/${id}`)}
@@ -88,7 +88,7 @@ const CategoryPage = () => {
                                                                         ?
                                                                         <button
                                                                             onClick={isLoggedIn?() => deleteCart(item):()=>{toast.error("Please Login or Sign up")}}
-                                                                            className=" bg-red-700 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
+                                                                            className="w-full px-4 py-3 text-center text-white bg-[#1e88e5] hover:bg-[#2297fe] border border--600 rounded-xl">
                                                                             Delete To Cart
                                                                         </button>
 
@@ -96,7 +96,7 @@ const CategoryPage = () => {
 
                                                                         <button
                                                                             onClick={isLoggedIn?() => addCart(item):()=>{toast.error("Please Login or Sign up")}}
-                                                                            className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
+                                                                            className="w-full px-4 py-3 text-center text-white bg-[#1e88e5] hover:bg-[#2297fe] border border--600 rounded-xl">
                                                                             Add To Cart
                                                                         </button>
                                                                     }

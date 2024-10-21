@@ -81,10 +81,10 @@ const Category = () => {
     }, []);
 
     return (
-        <div className="relative w-[100%] flex justify-center items-center" style={mode==='light'?{backgroundColor:'white'}:{backgroundColor:'rgb(40, 44, 52)'}}>
+        <div className="relative w-full flex justify-center items-center" style={mode==='light'?{backgroundColor:'white'}:{backgroundColor:'rgb(40, 44, 52)'}}>
             <button
                 onClick={scrollLeft}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 m-1"
+                className="absolute left-0 top-[48%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 m-1"
             >
                 <CiCircleChevLeft size={30} style={mode==='light'?{color:'black'}:{color:'white'}} />
             </button>
@@ -96,10 +96,10 @@ const Category = () => {
                 }}
                 className='flex overflow-x-auto whitespace-nowrap w-[100%] h-[200px] scroll-p-left-[10px] border-[#ccc] border-1 border-solid hide-scroll-bar'
             >
-                <div className="flex items-center hide-scroll-bar">
+                <div className="flex items-center hide-scroll-bar w-full">
                     {category.map((item, index) => {
                         return (
-                            <div key={index} className="px-3 lg:px-10 hover:scale-105 transition-all duration-300">
+                            <div key={index} className="px-3 lg:px-10 hover:scale-105 transition-all duration-300 w-full">
                                  {console.log(item.name)}
                                 <div onClick={() => navigate(`/category/${item.name}`)} className=" w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full transition-all cursor-pointer mb-1 hover:rotate-[360deg] duration-1000">
                                     <div className="flex justify-center mb-12" style={mode==='dark'?{...bgColor,borderRadius:'100%'}:{background:'pink',borderRadius:'100%'}} >
@@ -116,7 +116,7 @@ const Category = () => {
 
             <button
                 onClick={scrollRight}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 m-1"
+                className="absolute right-0 top-[48%] transform -translate-y-1/2 bg-transparent border-none cursor-pointer z-10 m-1"
             >
                 <CiCircleChevRight size={30} style={mode==='light'?{color:'black'}:{color:'white'}}/>
             </button>

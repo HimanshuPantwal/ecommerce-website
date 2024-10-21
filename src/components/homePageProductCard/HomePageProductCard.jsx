@@ -38,13 +38,13 @@ const HomePageProductCard = () => {
       setIsLoggedIn(true);
     }
     
-    AOS.init({ duration: 800 });
+    AOS.init({ duration: 1400 });
   }, []);
 
   return (
     <div className="mt-10" style={mode === "light" ? { backgroundColor: "white" } : { backgroundColor: "rgb(62 64 66)" }}>
       <div className="">
-        <h1 className="text-center mb-5 text-3xl font-bold" style={mode === "dark" ? { color: "white" } : { color: "black" }}>
+        <h1 className="text-center mb-5 text-[2.5rem] font-bold" style={mode === "dark" ? { color: "white" } : { color: "black" }} data-aos='fade-right'>
           Bestselling Products
         </h1>
       </div>
@@ -61,8 +61,8 @@ const HomePageProductCard = () => {
               return (
                 <div
                   key={index}
-                  className="p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-                  data-aos="fade-up"
+                  className="p-4 w-full md:w-1/2 lg:w-1/3"
+                  data-aos="flip-down"
                 >
                   <div
                     className={`h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105`}

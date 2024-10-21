@@ -3,16 +3,18 @@ import Layout from "../../components/layout/Layout";
 import { Trash } from 'lucide-react';
 import { decrementQuantity, deleteFromCart, incrementQuantity } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import BuyNowModal from "../../components/buyNowModal/BuyNowModal";
 import { Navigate } from "react-router";
+import myContext from "../../context/myContext";
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-
+    const context=useContext(myContext);
+    const {mode}=context;
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
         toast.success("Delete cart");
@@ -85,11 +87,11 @@ const CartPage = () => {
         <Layout>
             <div className="container mx-auto px-4 max-w-7xl lg:px-8">
                 <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900  sm:text-4xl">
+                    <h1 className={`text-3xl font-bold tracking-tight  sm:text-4xl ${mode==='dark'?'text-white': 'text-gray-900'}`}>
                         Shopping Cart
                     </h1>
-                    <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-                        <section aria-labelledby="cart-heading" className="rounded-lg bg-white  lg:col-span-8 p-4 shadow-lg">
+                    <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16 ">
+                        <section  className={`rounded-lg  lg:col-span-8 p-4 shadow-lg bg-white`}>
                             <h2 id="cart-heading" className="sr-only">
                                 Items in your shopping cart
                             </h2>
@@ -101,11 +103,11 @@ const CartPage = () => {
                                             return (
                                                 <div key={index} className="p-4">
                                                     <li className="flex py-6 sm:py-6">
-                                                        <div className="flex-shrink-0">
+                                                        <div className="flex-shrink-0 rounded-full ">
                                                             <img
                                                                 src={productImageUrl}
                                                                 alt="img"
-                                                                className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
+                                                                className="sm:h-38 sm:w-38 h-24 w-24 rounded-full object-fill object-center"
                                                             />
                                                         </div>
 
@@ -114,16 +116,16 @@ const CartPage = () => {
                                                                 <div>
                                                                     <div className="flex justify-between">
                                                                         <h3 className="text-sm">
-                                                                            <div className="font-semibold text-black text-gray-200">
+                                                                            <div className="font-semibold text-black">
                                                                                 {title}
                                                                             </div>
                                                                         </h3>
                                                                     </div>
                                                                     <div className="mt-1 flex text-sm">
-                                                                        <p className="text-sm text-gray-500 text-gray-400">{category}</p>
+                                                                        <p className="text-sm text-gray-500 ">{category}</p>
                                                                     </div>
                                                                     <div className="mt-1 flex items-end">
-                                                                        <p className="text-sm font-medium text-gray-900 text-gray-200">
+                                                                        <p className="text-sm font-medium text-gray-900 ">
                                                                             ₹{price}
                                                                         </p>
                                                                     </div>
@@ -163,7 +165,7 @@ const CartPage = () => {
                             </ul>
                         </section>
 
-                        {/* Order summary */}
+                        
                         <section
                             aria-labelledby="summary-heading"
                             className="mt-16 rounded-md bg-white  lg:col-span-4 lg:mt-0 p-6 shadow-lg"
