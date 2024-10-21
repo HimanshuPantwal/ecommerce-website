@@ -1,36 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 
-const PrevArrow = ({ className, style, onClick }) => {
-    return (
-        <div
-            className={`${className} bg-[#1c83dc] hover:bg-pink-600 p-2 pl-[0.3rem] rounded-full shadow-lg size-[2rem] text-center z-10`}
-            style={{ ...style, display: "block", left: "-20px" }} 
-            onClick={onClick}
-        >
-        </div>
-    );
-};
-
-
-const NextArrow = ({ className, style, onClick }) => {
-    return (
-        <div
-            className={`${className} bg-[#1c83dc] hover:bg-pink-600 rounded-full  p-2 pr-[0.3rem] shadow-lg size-[2rem] text-center `}
-            style={{ ...style, display: "block", right: "-20px" }} 
-            onClick={onClick}
-        >
-        </div>
-    );
-};
-
 const HeroSlider = () => {
     const navigate = useNavigate();
-
     
+    
+    const [activeSlide, setActiveSlide] = useState(0);
+
     const sliderItems = [
         {
             category: "mobile",
@@ -54,22 +33,32 @@ const HeroSlider = () => {
         },
     ];
 
-    
     const settings = {
-        dots: true,             
-        infinite: true,         
-        speed: 500,             
-        slidesToShow: 1,        
-        slidesToScroll: 1,      
-        autoplay: true,         
-        autoplaySpeed: 3000,    
-        arrows: true,           
-        prevArrow: <PrevArrow />, 
-        nextArrow: <NextArrow />, 
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: true,
+        beforeChange: (oldIndex, newIndex) => setActiveSlide(newIndex),
+        
+        
+        customPaging: i => (
+            <div
+                className={`h-2 w-2 rounded-full transition-all duration-300 transform hover:scale-150 ${i === activeSlide ? 'bg-pink-500' : 'bg-gray-400'}`}
+            />
+        ),
+        appendDots: dots => (
+            <div>
+                <ul className="flex justify-center space-x-3 mt-3">{dots}</ul>
+            </div>
+        ),
     };
 
     return (
-        <div className="relative mx-10 max-w-7xl px-4 my-2">
+        <div className="relative mx-10 max-w-7xl px-4 my-2 h-full p-4">
             <Slider {...settings}>
                 {sliderItems.map((item, index) => (
                     <div key={index} className="relative bg-white shadow-lg rounded-lg overflow-hidden">
@@ -80,7 +69,6 @@ const HeroSlider = () => {
                                 className="object-contain max-h-64 lg:max-h-96 mx-auto"
                             />
                         </div>
-                       
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 p-4">
                             <h2 className="text-white text-2xl lg:text-4xl font-bold mb-2">
                                 {item.offer}
