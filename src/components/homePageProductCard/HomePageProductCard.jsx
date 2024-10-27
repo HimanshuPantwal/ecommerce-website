@@ -16,7 +16,6 @@ const HomePageProductCard = () => {
   const { loading, getAllProduct, mode } = context;
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
   const addCart = (item) => {
     dispatch(addToCart(item));
     toast.success("Added to cart");
@@ -97,14 +96,14 @@ const HomePageProductCard = () => {
                       <div className="flex justify-center mt-4">
                         {cartItems.some((p) => p.id === item.id) && user ? (
                           <button
-                            onClick={isLoggedIn ? () => deleteCart(item) : () => {}}
+                            onClick={isLoggedIn && user.role!=="admin" ? () => deleteCart(item) : () => { toast.error("Login as user for this action")}}
                             className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                           >
                             Delete From Cart
                           </button>
                         ) : (
                           <button
-                            onClick={isLoggedIn ? () => addCart(item) : () => {}}
+                            onClick={isLoggedIn && user.role!=="admin" ? () => addCart(item) : () => { toast.error("Login as user for this action")}}
                             className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                           >
                             Add To Cart

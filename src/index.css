@@ -18,4 +18,9 @@ html{
   .fade-in {
     animation: fadeIn 0.8s forwards;
   }
-  
+  .testimonial-slider{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }

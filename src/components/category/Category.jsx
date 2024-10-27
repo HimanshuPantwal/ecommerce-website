@@ -58,11 +58,12 @@ const Category = () => {
             scrollContainerRef.current.scrollLeft += 200;
         }
     };
-    const bgColor={
-        background: '#085078',
-        background: '-webkit-linear-gradient(to right, #85D8CE, #085078)',
-        background: 'linear-gradient(to right, #85D8CE, #085078)'
-    }
+
+    const bgColor = {
+        background: 'linear-gradient(to right, #85D8CE, #085078)',
+        WebkitBackground: 'linear-gradient(to right, #85D8CE, #085078)', // For older WebKit browsers
+      }; 
+           
     useEffect(() => {
         const scrollContainer = scrollContainerRef.current;
 

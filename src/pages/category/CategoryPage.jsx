@@ -1,16 +1,18 @@
 import { useNavigate, useParams } from "react-router";
 import Layout from "../../components/layout/Layout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
 
+
 const CategoryPage = () => {
     const { categoryname } = useParams();
     const context = useContext(myContext);
-    const { getAllProduct, loading,isLoggedIn } = context;
+    const [user,setUser]=useState("");
+    const { getAllProduct, loading, isLoggedIn,setIsLoggedIn } = context;
 
     const navigate = useNavigate();
 
@@ -21,9 +23,9 @@ const CategoryPage = () => {
     const dispatch = useDispatch();
 
     const addCart = (item) => {
-        
+
         dispatch(addToCart(item));
-        toast.success("Add to cart")
+        toast.success("")
     }
 
     const deleteCart = (item) => {
@@ -31,19 +33,24 @@ const CategoryPage = () => {
         toast.success("Delete cart")
     }
 
-    
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
+        const storedUser = JSON.parse(localStorage.getItem("users"));
+        if (storedUser) {
+          setUser(storedUser);
+          setIsLoggedIn(true);
+        }
     }, [cartItems])
     return (
         <Layout>
             <div className="mt-10">
-               
+
                 <div className="">
                     <h1 className=" text-center mb-5 text-2xl font-semibold first-letter:uppercase">{categoryname}</h1>
                 </div>
 
-            
+
                 {loading ?
                     <>
                         <div className="flex justify-center">
@@ -87,7 +94,7 @@ const CategoryPage = () => {
 
                                                                         ?
                                                                         <button
-                                                                            onClick={isLoggedIn?() => deleteCart(item):()=>{toast.error("Please Login or Sign up")}}
+                                                                            onClick={isLoggedIn && user.role!=="admin" ? () => deleteCart(item) : () => { toast.error("Please Login or Sign up as user") }}
                                                                             className="w-full px-4 py-3 text-center text-white bg-[#1e88e5] hover:bg-[#2297fe] border border--600 rounded-xl">
                                                                             Delete To Cart
                                                                         </button>
@@ -95,7 +102,7 @@ const CategoryPage = () => {
                                                                         :
 
                                                                         <button
-                                                                            onClick={isLoggedIn?() => addCart(item):()=>{toast.error("Please Login or Sign up")}}
+                                                                            onClick={isLoggedIn && user.role!=="admin" ? () => addCart(item) : () => { toast.error("Please Login or Sign up as user") }}
                                                                             className="w-full px-4 py-3 text-center text-white bg-[#1e88e5] hover:bg-[#2297fe] border border--600 rounded-xl">
                                                                             Add To Cart
                                                                         </button>

@@ -1,19 +1,20 @@
 import { useNavigate } from "react-router";
 import Layout from "../../components/layout/Layout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import myContext from "../../context/myContext";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import Loader from "../../components/loader/Loader";
-import "aos/dist/aos.css"; 
-import AOS from "aos"; 
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const AllProduct = () => {
     const navigate = useNavigate();
     const context = useContext(myContext);
-    const { loading, getAllProduct, mode, isLoggedIn } = context;
+    const { loading, getAllProduct, mode, isLoggedIn,setIsLoggedIn } = context;
     const cartItems = useSelector((state) => state.cart);
+    const [user,setUser]=useState("");
     const dispatch = useDispatch();
 
     const addCart = (item) => {
@@ -31,7 +32,11 @@ const AllProduct = () => {
     }, [cartItems]);
 
     useEffect(() => {
-        
+        const storedUser = JSON.parse(localStorage.getItem("users"));
+        if (storedUser) {
+          setUser(storedUser);
+          setIsLoggedIn(true);
+        }
         AOS.init({ duration: 800 });
     }, []);
 
@@ -43,8 +48,8 @@ const AllProduct = () => {
             >
                 <div>
                     <h1 className="text-2xl text-center md:text-3xl font-bold text-pink-500 dark:text-pink-400">
-                    All Products
-        </h1>
+                        All Products
+                    </h1>
                 </div>
 
                 <section className="text-gray-600 body-font">
@@ -88,17 +93,17 @@ const AllProduct = () => {
                                                 <div className="flex justify-center mt-4">
                                                     {cartItems.some((p) => p.id === item.id) ? (
                                                         <button
-                                                            onClick={isLoggedIn ? () => deleteCart(item) : () => {}}
+                                                            onClick={isLoggedIn && user.role !== "admin" ? () => deleteCart(item) : () => { toast.error("Login or Signup as User") }}
                                                             className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                                                         >
                                                             Delete From Cart
                                                         </button>
                                                     ) : (
                                                         <button
-                                                            onClick={isLoggedIn ? () => addCart(item) : () => {}}
+                                                            onClick={isLoggedIn && user.role !== "admin" ? () => addCart(item) : () => { toast.error("Login or Signup as User") }}
                                                             className="bg-[#1e88e5] hover:bg-[#2297fe] w-full text-white py-2 rounded-lg font-bold transition-colors duration-300"
                                                         >
-                                                            Add To Cart
+                                                        Add to Cart
                                                         </button>
                                                     )}
                                                 </div>

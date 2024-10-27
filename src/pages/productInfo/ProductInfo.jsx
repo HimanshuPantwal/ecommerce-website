@@ -11,11 +11,11 @@ import toast from "react-hot-toast";
 
 const ProductInfo = () => {
     const context = useContext(myContext);
-    const { loading, setLoading, isLoggedIn, mode } = context; // Added mode for dark mode toggle
+    const { loading, setLoading, isLoggedIn,setIsLoggedIn,mode } = context; // Added mode for dark mode toggle
 
     const [product, setProduct] = useState('');
     const { id } = useParams();
-
+    const [user,setUser]=useState("")
     const getProductData = async () => {
         setLoading(true);
         try {
@@ -43,6 +43,11 @@ const ProductInfo = () => {
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
+        const storedUser = JSON.parse(localStorage.getItem("users"));
+        if (storedUser) {
+          setUser(storedUser);
+          setIsLoggedIn(true);
+        }
     }, [cartItems]);
 
     useEffect(() => {
@@ -90,14 +95,14 @@ const ProductInfo = () => {
                                     <div className="flex flex-wrap items-center mb-6">
                                         {cartItems.some((p) => p.id === product.id) ? (
                                             <button
-                                                onClick={isLoggedIn ? () => deleteCart(product) : () => toast.error("Please Login or Sign up")}
+                                                onClick={isLoggedIn && user.role!=="admin" ? () => deleteCart(product) : () => toast.error("Please Login or Sign up as user")}
                                                 className="w-full px-4 py-3 text-center text-white bg-[#1e88e5] hover:bg-[#2297fe] border border--600 rounded-xl"
                                             >
                                                 Delete from cart
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={isLoggedIn ? () => addCart(product) : () => toast.error("Please Login or Sign up")}
+                                                onClick={isLoggedIn && user.role!=="admin" ? () => addCart(product) : () => toast.error("Please Login or Sign up as user")}
                                                 className="w-full px-4 py-3 text-center text-white bg-[#1e88e5] hover:bg-[#2297fe] rounded-xl"
                                             >
                                                 Add to cart
