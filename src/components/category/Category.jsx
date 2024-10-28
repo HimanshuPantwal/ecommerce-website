@@ -61,7 +61,7 @@ const Category = () => {
 
     const bgColor = {
         background: 'linear-gradient(to right, #85D8CE, #085078)',
-        WebkitBackground: 'linear-gradient(to right, #85D8CE, #085078)', // For older WebKit browsers
+        WebkitBackground: 'linear-gradient(to right, #85D8CE, #085078)', 
       }; 
            
     useEffect(() => {

@@ -20,9 +20,9 @@ const categoryList = {
 const AddProductPage = () => {
     const context = useContext(myContext);
     const { loading, setLoading } = context;
-    const [fetchingFromApi, setFetchingFromApi] = useState(false); // If fetching a product
-    const [manualProduct, setManualProduct] = useState(true); // Toggle for manual vs API fetch
-    const [apiProductFetched, setApiProductFetched] = useState(false); // State to track if API product is fetched
+    const [fetchingFromApi, setFetchingFromApi] = useState(false); 
+    const [manualProduct, setManualProduct] = useState(true); 
+    const [apiProductFetched, setApiProductFetched] = useState(false); 
     const navigate = useNavigate();
 
     const [product, setProduct] = useState({
@@ -74,7 +74,7 @@ const AddProductPage = () => {
         return '';
     };
 
-    // Fetch product from API
+
     const fetchApi = useCallback(() => {
         setLoading(true);
         fetch(`https://fakestoreapi.com/products?page=${countRef.current}`)
@@ -97,7 +97,7 @@ const AddProductPage = () => {
                         year: 'numeric'
                     }),
                 });
-                setApiProductFetched(true); // Indicate product has been fetched from API
+                setApiProductFetched(true); 
                 setLoading(false);
             })
             .catch((error) => {
@@ -116,7 +116,7 @@ const AddProductPage = () => {
                         Add Product
                     </h2>
 
-                    {/* Toggle buttons for Manual or API Fetch */}
+                    
                     <div className="flex justify-around mb-5">
                         <button
                             className={`px-4 py-2 rounded-md transition-all duration-300 ${manualProduct ? 'bg-blue-500 text-white shadow-md hover:shadow-lg' : 'bg-gray-200'}`}
@@ -132,7 +132,7 @@ const AddProductPage = () => {
                         </button>
                     </div>
 
-                    {/* Manual Product Entry */}
+                    
                     {manualProduct && (
                         <div>
                             <div className="mb-3">
@@ -182,7 +182,7 @@ const AddProductPage = () => {
                         </div>
                     )}
 
-                    {/* Fetch from API */}
+                    
                     {!manualProduct && (
                         <div className="text-center">
                             {!apiProductFetched && (
@@ -236,9 +236,9 @@ const AddProductPage = () => {
                                         />
                                     </div>
 
-                                    {/* Image Preview */}
+                                   
                                     {product?.productImageUrl && (
-                                        <div className="mt-5">
+                                        <div className="m-5">
                                             <h3 className="text-lg font-semibold text-blue-500">Product Image Preview</h3>
                                             <img
                                                 src={product?.productImageUrl}
@@ -253,7 +253,7 @@ const AddProductPage = () => {
                         </div>
                     )}
 
-                    {/* Category Selection */}
+                    
                     <div className="mb-3">
                         <select
                             value={product.category}
@@ -269,7 +269,7 @@ const AddProductPage = () => {
                         </select>
                     </div>
 
-                    {/* Add Product Button */}
+                    
                     <div className="mb-3">
                         <button
                             onClick={addProductFunction}
